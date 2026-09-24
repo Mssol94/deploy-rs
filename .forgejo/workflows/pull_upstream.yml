@@ -20,4 +20,4 @@ jobs:
           FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
         run: |
           fj --host "${FORGEJO_SERVER_URL}" auth add-key "${FORGEJO_TOKEN}"
-          fj auth list
+          fj pr create --title "Sync with upstream" --body "This pull request syncs the latest changes from the upstream repository." --repo "${FORGEJO_SERVER_URL}/${FORGEJO_REPOSITORY}" --base main --head upstream-sync
