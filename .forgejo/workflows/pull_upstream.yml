@@ -9,6 +9,7 @@ jobs:
   create_pull_request:
     runs-on: [native-x86_64-linux, big-parallel]
     steps:
+      - uses: actions/setup-git@v1
       - uses: actions/checkout@v7
         with:
           ref: upstream-sync
