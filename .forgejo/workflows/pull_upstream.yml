@@ -12,6 +12,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           ref: upstream-sync
+      - uses: https://github.com/actions-rust-lang/setup-rust-toolchain@v2
       - uses: https://github.com/cargo-bins/cargo-binstall@main
       - name: Install Forgejo CLI
         run: cargo binstall forgejo-cli
