@@ -16,6 +16,8 @@ jobs:
         run: |
           curl -sSL https://codeberg.org/forgejo-contrib/forgejo-cli/releases/download/latest/forgejo-cli-x86_64-linux.tar.gz | tar -xz -C /usr/local/bin
       - name: Create Pull Request
+        env:
+          FORGEJO_TOKEN: ${{ secrets.FORGEJO_TOKEN }}
         run: |
-          fj --host "${FORGEJO_SERVER_URL}" auth add-key "${FORGEJO_ACTOR}" "${{ secrets.FORGEJO_TOKEN }}"
+          fj --host "${FORGEJO_SERVER_URL}" auth add-key "${FORGEJO_TOKEN}"
           fj auth list
