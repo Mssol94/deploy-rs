@@ -16,11 +16,8 @@ jobs:
         uses: https://github.com/aormsby/Fork-Sync-With-Upstream-action@v3.4.1
         with:
           target_sync_branch: upstream-sync
-          target_repo_token: ${{ secrets.FORGEJO_TOKEN }}
-          target_host_domain: git.bitbunker.page
           upstream_sync_branch: master
           upstream_sync_repo: serokell/deploy-rs
-          test_mode: true
 
       - name: New commits found
         if: steps.sync.outputs.has_new_commits == 'true'
