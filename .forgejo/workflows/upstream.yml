@@ -20,6 +20,7 @@ jobs:
           target_host_domain: git.bitbunker.page
           upstream_sync_branch: master
           upstream_sync_repo: serokell/deploy-rs
+          test_mode: true
 
       - name: New commits found
         if: steps.sync.outputs.has_new_commits == 'true'
