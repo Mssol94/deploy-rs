@@ -1,0 +1,33 @@
+name: "Upstream Sync"
+on:
+  schedule:
+    - cron: "0 0 * * *" # every day at midnight
+  workflow_dispatch:
+
+jobs:
+  sync_latest_from_upstream:
+    runs-on: ubuntu-latest
+    name: Sync latest commits from upstream repo
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: upstream-sync
+      - name: Sync upstream changes
+        uses: https://github.com/aormsby/Fork-Sync-With-Upstream-action@v3.4.1
+        with:
+          target_sync_branch: upstream-sync
+          target_repo_token: ${{ secrets.FORGEJO_TOKEN }}
+          target_host_domain: git.bitbunker.page
+          upstream_sync_branch: master
+          upstream_sync_repo: serokell/deploy-rs
+
+      - name: New commits found
+        if: steps.sync.outputs.has_new_commits == 'true'
+        run: echo "New commits were found to sync."
+
+      - name: No new commits
+        if: steps.sync.outputs.has_new_commits == 'false'
+        run: echo "There were no new commits."
+
+      - name: Show value of 'has_new_commits'
+        run: echo ${{ steps.sync.outputs.has_new_commits }}
