@@ -11,7 +11,7 @@ jobs:
     outputs:
       check-matrix: ${{ steps.set-check-matrix.outputs.matrix }}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v4
 
       - id: set-check-matrix
         run: echo "matrix=$(nix eval --json .#check-matrix.x86_64-linux)" >> $FORGEJO_OUTPUT
@@ -25,7 +25,7 @@ jobs:
       # this matrix consists of the names of all checks defined in flake.nix
       matrix: ${{fromJson(needs.get-matrix.outputs.check-matrix)}}
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@v4
 
       - name: check
         run: nix build -L .#checks.x86_64-linux.${{ matrix.check }}
