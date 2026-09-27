@@ -24,7 +24,6 @@ jobs:
       fail-fast: false
       # this matrix consists of the names of all checks defined in flake.nix
       matrix: ${{fromJson(needs.get-matrix.outputs.check-matrix)}}
-      max-parallel: 0
     steps:
       - uses: actions/checkout@v4
 
