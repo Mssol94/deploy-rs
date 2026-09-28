@@ -49,7 +49,6 @@ let
         imports = [ (import ./common.nix { inherit inputs pkgs flakes; }) ];
         environment.systemPackages = [ pkgs.deploy-rs.deploy-rs ];
         # nix evaluation takes a lot of memory, especially in non-flake usage
-        virtualisation.memorySize = lib.mkForce 4096;
         virtualisation.additionalPaths = lib.optionals isLocal [
           pkgs.hello
           pkgs.figlet

@@ -7,19 +7,19 @@ on: pull_request
 
 jobs:
   get-matrix:
-    runs-on: [self-hosted, nix]
+    runs-on: [native-x86_64-linux, kvm]
     outputs:
       check-matrix: ${{ steps.set-check-matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v4
 
       - id: set-check-matrix
-        run: echo "matrix=$(nix eval --json .#check-matrix.x86_64-linux)" >> $GITHUB_OUTPUT
+        run: echo "matrix=$(nix eval --json .#check-matrix.x86_64-linux)" >> $FORGEJO_OUTPUT
 
   check:
     needs: get-matrix
     name: check ${{ matrix.check }}
-    runs-on: [self-hosted, nix]
+    runs-on: [native-x86_64-linux, kvm]
     strategy:
       fail-fast: false
       # this matrix consists of the names of all checks defined in flake.nix

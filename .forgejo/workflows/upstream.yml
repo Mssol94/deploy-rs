@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Mssol94 <magnus@bitbunker.page>
+#
+# SPDX-License-Identifier: MPL-2.0
 name: "Upstream Sync"
 on:
   schedule:
