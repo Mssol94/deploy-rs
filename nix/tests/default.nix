@@ -32,8 +32,8 @@ let
              server.succeed("su ${user} -l -c 'hello | figlet' >&2")
            ''
            }: let
-    nodes = {
-      server = { nodes, ... }: {
+    containers = {
+      server = { containers, ... }: {
         imports = [
          ./server.nix
          (import ./common.nix { inherit inputs pkgs flakes; })
@@ -41,24 +41,18 @@ let
         virtualisation.additionalPaths = lib.optionals (!isLocal) [
           pkgs.hello
           pkgs.figlet
-          (allDrvOutputs nodes.server.system.build.toplevel)
+          (allDrvOutputs containers.server.system.build.toplevel)
           pkgs.deploy-rs.deploy-rs
         ];
       };
-      client = { nodes, ... }: {
+      client = { containers, ... }: {
         imports = [ (import ./common.nix { inherit inputs pkgs flakes; }) ];
         environment.systemPackages = [ pkgs.deploy-rs.deploy-rs ];
         # nix evaluation takes a lot of memory, especially in non-flake usage
-        swapDevices = [
-          {
-            device = "/swapfile";
-            size = (4 * 1024);
-          }
-        ];
         virtualisation.additionalPaths = lib.optionals isLocal [
           pkgs.hello
           pkgs.figlet
-          (allDrvOutputs nodes.server.system.build.toplevel)
+          (allDrvOutputs containers.server.system.build.toplevel)
         ];
       };
     };
@@ -98,11 +92,11 @@ let
     '';
 
   in pkgs.nixosTest {
-    inherit nodes name;
+    inherit containers name;
 
-    testScript = { nodes }: let
+    testScript = { containers }: let
       serverNetworkJSON = pkgs.writeText "server-network.json"
-        (builtins.toJSON nodes.server.system.build.networkConfig);
+        (builtins.toJSON containers.server.system.build.networkConfig);
     in ''
       start_all()
 
