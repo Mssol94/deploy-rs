@@ -21,6 +21,11 @@
   systemd.services."swap-config" = {
     description = "Swap configuration service";
     script = ''
+      # Check if the swap is already enabled
+      if ${pkgs.util-linux}/bin/swapon --show | grep -q /dev/vdb; then
+        echo "Swap is already enabled on /dev/vdb"
+        exit 0
+      fi
       ${pkgs.util-linux}/bin/mkswap /dev/vdb
       ${pkgs.util-linux}/bin/swapon /dev/vdb
     '';
