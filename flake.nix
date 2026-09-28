@@ -201,6 +201,19 @@
             reuse
             rust.packages.stable.rustPlatform.rustLibSrc
           ];
+          shellHook = ''
+            if [ -n "$VSCODE_PID" ]; then
+              jq -n '{ "rust-analyzer.serverPath": "'${pkgs.rust-analyzer}/bin/rust-analyzer'" }' > .vscode/settings.json.tmp
+
+              if [ -f .vscode/settings.json ]; then
+                jq -s '.[1] * .[0]' .vscode/settings.json.tmp .vscode/settings.json > .vscode/settings.json.merged
+                mv .vscode/settings.json.merged .vscode/settings.json
+                rm .vscode/settings.json.tmp
+              else
+                mv .vscode/settings.json.tmp .vscode/settings.json
+              fi
+            fi
+          '';
         };
 
         checks = {
