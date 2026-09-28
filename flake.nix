@@ -203,7 +203,7 @@
           ];
           shellHook = ''
             if [ -n "$VSCODE_PID" ]; then
-              jq -n '{ "rust-analyzer.serverPath": "'${pkgs.rust-analyzer}/bin/rust-analyzer'" }' > .vscode/settings.json.tmp
+              jq -n '{ "rust-analyzer.server.path": "'${pkgs.rust-analyzer}/bin/rust-analyzer'" }' > .vscode/settings.json.tmp
 
               if [ -f .vscode/settings.json ]; then
                 jq -s '.[1] * .[0]' .vscode/settings.json.tmp .vscode/settings.json > .vscode/settings.json.merged
