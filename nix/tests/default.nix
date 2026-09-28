@@ -49,12 +49,7 @@ let
         imports = [ (import ./common.nix { inherit inputs pkgs flakes; }) ];
         environment.systemPackages = [ pkgs.deploy-rs.deploy-rs ];
         # nix evaluation takes a lot of memory, especially in non-flake usage
-        swapDevices = [
-          {
-            device = "/swapfile";
-            size = (4 * 1024);
-          }
-        ];
+        virtualisation.memorySize = lib.mkForce (3 * 1024);
         virtualisation.additionalPaths = lib.optionals isLocal [
           pkgs.hello
           pkgs.figlet
