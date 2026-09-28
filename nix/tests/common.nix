@@ -18,6 +18,20 @@
   # The "nixos-test-profile" profile disables the `switch-to-configuration` script by default
   system.switch.enable = true;
 
+  systemd.services."swap-config" = {
+    description = "Swap configuration service";
+    script = ''
+      ${pkgs.util-linux}/bin/mkswap /dev/vdb
+      ${pkgs.util-linux}/bin/swapon /dev/vdb
+    '';
+    after = [ "systemd-udev-settle.service" ];
+    wantedBy = [ "multi-user.target" ];
+  };
+
+  virtualisation.emptyDiskImages = [
+    (6 * 1024) # 6 GiB
+  ];
+
   virtualisation.graphics = false;
   virtualisation.memorySize = 1536;
   boot.loader.grub.enable = false;
