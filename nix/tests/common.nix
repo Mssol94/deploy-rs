@@ -19,6 +19,7 @@
   system.switch.enable = true;
 
   virtualisation.graphics = false;
+  virtualisation.memorySize = 1536;
   boot.loader.grub.enable = false;
   documentation.enable = false;
 }
