@@ -64,6 +64,10 @@ const fn make_emoji(level: log::Level) -> &'static str {
     }
 }
 
+fn wrap_level_tag(level: log::Level) -> String {
+    format!("[{}]", &level.to_string())
+}
+
 pub fn logger_formatter_activate(
     w: &mut dyn std::io::Write,
     _now: &mut DeferredNow,
@@ -73,9 +77,9 @@ pub fn logger_formatter_activate(
 
     write!(
         w,
-        "⭐ {} [activate] [{}] {}",
+        "⭐ {} [activate] {} {}",
         make_emoji(level),
-        style(level, level.to_string()),
+        style(level, wrap_level_tag(level)),
         record.args()
     )
 }
@@ -89,9 +93,9 @@ pub fn logger_formatter_wait(
 
     write!(
         w,
-        "👀 {} [wait] [{}] {}",
+        "👀 {} [wait] {} {}",
         make_emoji(level),
-        style(level, level.to_string()),
+        style(level, wrap_level_tag(level)),
         record.args()
     )
 }
@@ -105,9 +109,9 @@ pub fn logger_formatter_revoke(
 
     write!(
         w,
-        "↩️ {} [revoke] [{}] {}",
+        "↩️ {} [revoke] {} {}",
         make_emoji(level),
-        style(level, level.to_string()),
+        style(level, wrap_level_tag(level)),
         record.args()
     )
 }
@@ -121,9 +125,9 @@ pub fn logger_formatter_deploy(
 
     write!(
         w,
-        "🚀 {} [deploy] [{}] {}",
+        "🚀 {} [deploy] {} {}",
         make_emoji(level),
-        style(level, level.to_string()),
+        style(level, wrap_level_tag(level)),
         record.args()
     )
 }
