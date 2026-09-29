@@ -207,7 +207,7 @@ pub fn init_logger(
         let mut logger = Logger::with_env_or_str("debug")
             .log_to_file()
             .format_for_stderr(logger_formatter)
-            .set_palette("196;208;51;7;8".to_string())
+            .set_palette("1;3;4;7;8".to_string())
             .directory(log_dir)
             .duplicate_to_stderr(match debug_logs {
                 true => Duplicate::Debug,
@@ -230,7 +230,7 @@ pub fn init_logger(
         })
         .log_target(LogTarget::StdErr)
         .format(logger_formatter)
-        .set_palette("196;208;51;7;8".to_string())
+        .set_palette("1;3;4;7;8".to_string())
         .build()?
     };
 
