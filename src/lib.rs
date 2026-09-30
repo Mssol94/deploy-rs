@@ -1,6 +1,7 @@
 // SPDX-FileCopyrightText: 2020 Serokell <https://serokell.io/>
 // SPDX-FileCopyrightText: 2020 Andreas Fuchs <asf@boinkor.net>
 // SPDX-FileCopyrightText: 2021 Yannik Sander <contact@ysndr.de>
+// SPDX-FileCopyrightText: 2026 Mssol94 <magnus@bitbunker.page>
 //
 // SPDX-License-Identifier: MPL-2.0
 
@@ -63,6 +64,10 @@ const fn make_emoji(level: log::Level) -> &'static str {
     }
 }
 
+fn wrap_level_tag(level: log::Level) -> String {
+    format!("[{}]", &level.to_string())
+}
+
 pub fn logger_formatter_activate(
     w: &mut dyn std::io::Write,
     _now: &mut DeferredNow,
@@ -72,9 +77,9 @@ pub fn logger_formatter_activate(
 
     write!(
         w,
-        "⭐ {} [activate] [{}] {}",
+        "⭐ {} [activate] {} {}",
         make_emoji(level),
-        style(level, level.to_string()),
+        style(level, wrap_level_tag(level)),
         record.args()
     )
 }
@@ -88,9 +93,9 @@ pub fn logger_formatter_wait(
 
     write!(
         w,
-        "👀 {} [wait] [{}] {}",
+        "👀 {} [wait] {} {}",
         make_emoji(level),
-        style(level, level.to_string()),
+        style(level, wrap_level_tag(level)),
         record.args()
     )
 }
@@ -104,9 +109,9 @@ pub fn logger_formatter_revoke(
 
     write!(
         w,
-        "↩️ {} [revoke] [{}] {}",
+        "↩️ {} [revoke] {} {}",
         make_emoji(level),
-        style(level, level.to_string()),
+        style(level, wrap_level_tag(level)),
         record.args()
     )
 }
@@ -120,9 +125,9 @@ pub fn logger_formatter_deploy(
 
     write!(
         w,
-        "🚀 {} [deploy] [{}] {}",
+        "🚀 {} [deploy] {} {}",
         make_emoji(level),
-        style(level, level.to_string()),
+        style(level, wrap_level_tag(level)),
         record.args()
     )
 }
@@ -202,7 +207,7 @@ pub fn init_logger(
         let mut logger = Logger::with_env_or_str("debug")
             .log_to_file()
             .format_for_stderr(logger_formatter)
-            .set_palette("196;208;51;7;8".to_string())
+            .set_palette("1;3;4;7;8".to_string())
             .directory(log_dir)
             .duplicate_to_stderr(match debug_logs {
                 true => Duplicate::Debug,
@@ -225,7 +230,7 @@ pub fn init_logger(
         })
         .log_target(LogTarget::StdErr)
         .format(logger_formatter)
-        .set_palette("196;208;51;7;8".to_string())
+        .set_palette("1;3;4;7;8".to_string())
         .build()?
     };
 

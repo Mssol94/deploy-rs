@@ -253,4 +253,23 @@ in {
       assert "📠" not in deploy_output, deploy_output
     '';
   };
+  color-log-tags = mkTest {
+    name = "color-log-tags";
+    user = "deploy";
+    deploySteps = ''
+      deploy_output = client.succeed("deploy -s .#server -- --offline 2>&1")
+
+      assert "\x1b[38;5;4m[INFO]\x1b[0m" in deploy_output, deploy_output
+    '';
+  };
+
+  color-log-tags-failing = mkTest {
+    name = "color-log-tags-failing";
+    user = "deploy";
+    deploySteps = ''
+      deploy_output = client.fail("deploy -s .#failing-server -- --offline 2>&1")
+
+      assert "\x1b[38;5;1m[ERROR]\x1b[0m" in deploy_output, deploy_output
+    '';
+  };
 }

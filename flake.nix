@@ -1,5 +1,6 @@
 # SPDX-FileCopyrightText: 2020 Serokell <https://serokell.io/>
 # SPDX-FileCopyrightText: 2020 Andreas Fuchs <asf@boinkor.net>
+# SPDX-FileCopyrightText: 2026 Mssol94 <magnus@bitbunker.page>
 #
 # SPDX-License-Identifier: MPL-2.0
 
