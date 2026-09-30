@@ -259,7 +259,7 @@ in {
     deploySteps = ''
       deploy_output = client.succeed("deploy -s .#server -- --offline 2>&1")
 
-      assert "\x1b[1;3;4;7;8m[INFO]\x1b[0m" in deploy_output, deploy_output
+      assert "\x1b[38;5;4m[INFO]\x1b[0m" in deploy_output, deploy_output
     '';
   };
 
@@ -269,7 +269,7 @@ in {
     deploySteps = ''
       deploy_output = client.fail("deploy -s .#failing-server -- --offline 2>&1")
 
-      assert "\x1b[1;3;4;7;8m[ERROR]\x1b[0m" in deploy_output, deploy_output
+      assert "\x1b[38;5;1m[ERROR]\x1b[0m" in deploy_output, deploy_output
     '';
   };
 }
